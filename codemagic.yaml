@@ -16,20 +16,20 @@ workflows:
 
       - name: Build for iOS (release)
         script: |
-          flutter build ios --release --no-codesign
-          mkdir -p Payload
-          cp -R build/ios/iphoneos/Runner.app Payload/
-          cd build/ios
-          zip -r app-release.ipa ../../Payload
-          cd ../..
+          flutter build ipa --release --no-codesign
 
       - name: Build for Android (release)
         script: |
           flutter build apk --release
 
     artifacts:
-      - build/ios/app-release.ipa
+      - build/ios/ipa/**/*.ipa
       - build/app/outputs/flutter-apk/app-release.apk
+
+    publishing:
+      email:
+        recipients:
+          - omardiazburggs599@gmail.com
 
     publishing:
       email:
