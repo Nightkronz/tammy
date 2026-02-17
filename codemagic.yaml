@@ -16,14 +16,19 @@ workflows:
 
       - name: Build for iOS (release)
         script: |
-          flutter build ipa --release --no-codesign
+          flutter build ios --release --no-codesign
+          mkdir -p Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          cd build/ios
+          zip -r app-release.ipa ../../Payload
+          cd ../..
 
       - name: Build for Android (release)
         script: |
           flutter build apk --release
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/app-release.ipa
       - build/app/outputs/flutter-apk/app-release.apk
 
     publishing:
